@@ -1,0 +1,10 @@
+window:
+    title: "turd"
+    width: 1024
+    height: 768
+    maximized: false
+    fullscreen: false
+renderer:
+    debug: true
+    vsync: true
+    samples: 0

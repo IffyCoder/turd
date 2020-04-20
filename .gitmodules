@@ -1,0 +1,18 @@
+[submodule "ext/assimp"]
+	path = ext/assimp
+	url = git@github.com:assimp/assimp.git
+[submodule "ext/imgui"]
+	path = ext/imgui
+	url = git@github.com:ocornut/imgui.git
+[submodule "ext/sol2"]
+	path = ext/sol2
+	url = git@github.com:ThePhD/sol2.git
+[submodule "ext/bullet3"]
+	path = ext/bullet3
+	url = git@github.com:bulletphysics/bullet3.git
+[submodule "ext/yaml-cpp"]
+	path = ext/yaml-cpp
+	url = git@github.com:jbeder/yaml-cpp.git
+[submodule "ext/DirectXTex"]
+	path = ext/DirectXTex
+	url = git@github.com:microsoft/DirectXTex.git

@@ -1,0 +1,11 @@
+cmake-build-*
+out
+.idea
+build
+.vs
+imgui.ini
+build.log
+test/game*
+test/settings.db*
+*.spv
+/bin
