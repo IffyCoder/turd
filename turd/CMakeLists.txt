@@ -59,6 +59,8 @@ set(_SRC
     systems/render/dx12/DX12State.hpp
     systems/render/dx12/Frame.cpp
     systems/render/dx12/Frame.hpp
+    systems/render/dx12/Pipeline.cpp
+    systems/render/dx12/Pipeline.hpp
 
     main.cpp
 )
