@@ -93,7 +93,7 @@ namespace turd
         FlushCommandQueue();
     }
 
-    void DX12State::MoveToNextFrame()
+    void DX12State::NextFrame()
     {
         auto frame = GetCurrentFrame();
 

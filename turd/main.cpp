@@ -15,10 +15,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     auto pWindow = std::make_unique<turd::Window>(hInstance);
     auto pEntityManager = std::make_unique<turd::EntityManager>();
     auto pRenderSystem = std::make_unique<turd::RenderSystem>(pWindow.get());
-    
+    auto pInputSystem = std::make_unique<turd::InputSystem>();
     
     gEnvironment.gEntityManager = pEntityManager.get();
     gEnvironment.gRenderSystem = pRenderSystem.get();
+    gEnvironment.gInputSystem = pInputSystem.get();
     
     auto pApplication = std::make_unique<turd::Application>(pWindow.get());
 

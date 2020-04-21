@@ -49,6 +49,8 @@ set(_SRC
     managers/EntityManager.hpp
 
     systems/ISystem.hpp
+    systems/input/InputSystem.cpp
+    systems/input/InputSystem.hpp
     systems/render/RenderSystem.cpp
     systems/render/RenderSystem.hpp
     systems/render/dx12/Adapter.cpp

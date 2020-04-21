@@ -15,7 +15,9 @@ namespace turd
     {
         Environment &env = GetEnvironment();
 
-        std::vector<ISystem *> updateOrder = {/*env.gInputSystem, env.gScriptSystem,*/ env.gRenderSystem};
+        env.gInputSystem->OnKey(VK_ESCAPE, [&]() { PostQuitMessage(0); });
+
+        std::vector<ISystem *> updateOrder = {env.gInputSystem, /*env.gScriptSystem,*/ env.gRenderSystem};
 
         D("Running systems in following order");
         std::for_each(std::begin(updateOrder), std::end(updateOrder), [](auto sys) {

@@ -10,12 +10,12 @@ namespace turd
     {
         mDX = std::make_unique<DX12State>(mWindow->mHandle);
         GetEnvironment().gEventBus->OnResize([&](auto &e) {
-            D("Resized");
+            D("Resized to %dx%d", e.Width, e.Height);
             mDX->Resize();
         });
     }
 
-    RenderSystem::~RenderSystem() {}
+    RenderSystem::~RenderSystem() { mDX->FlushCommandQueue(); }
 
     std::string RenderSystem::Name() { return "RenderSystem"; }
 
@@ -27,12 +27,13 @@ namespace turd
 
         if (FAILED(cmdListAlloc->Reset()))
         {
-            throw; // RuntimeError(_T("Failed to reset command list allocator"));
+            E("Failed to reset command list allocator");
         }
 
         if (FAILED(cmdList->Reset(cmdListAlloc.Get(), nullptr)))
         {
-            throw; // RuntimeError(_T("Failed to reset command list"));
+            E("Failed to reset command list");
+            throw;
         }
 
         cmdList->RSSetViewports(1, &mDX->GetViewPort());
@@ -44,6 +45,6 @@ namespace turd
 
         frame->Present();
 
-        mDX->MoveToNextFrame();
+        mDX->NextFrame();
     }
 } // namespace turd

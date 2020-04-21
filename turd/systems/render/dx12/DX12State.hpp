@@ -17,7 +17,7 @@ namespace turd
 
         void Resize();
 
-        void MoveToNextFrame();
+        void NextFrame();
 
         void ResetCommandList(Frame *frame);
 
