@@ -2,6 +2,8 @@
 
 namespace turd
 {
+    class ConstantBuffer;
+
     class Pipeline
     {
       public:
@@ -20,14 +22,19 @@ namespace turd
 
         std::string Name() const;
 
+        ConstantBuffer *Buffer(const std::string &name);
+
       private:
         void Compile(const std::string &spec);
         void CreateRootSignature();
         std::array<const CD3DX12_STATIC_SAMPLER_DESC, 7> GetStaticSamplers();
 
         std::string mName;
+
         Vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
         ComPtr<ID3D12RootSignature> mRootSignature = nullptr;
         ComPtr<ID3D12PipelineState> mState = nullptr;
+
+        Map<std::string, std::unique_ptr<ConstantBuffer>> mBuffers;
     };
 } // namespace turd

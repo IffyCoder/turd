@@ -56,6 +56,8 @@ set(_SRC
     systems/render/RenderSystem.hpp
     systems/render/dx12/Adapter.cpp
     systems/render/dx12/Adapter.hpp
+    systems/render/dx12/ConstantBuffer.cpp
+    systems/render/dx12/ConstantBuffer.hpp
     systems/render/dx12/DX12State.cpp
     systems/render/dx12/DX12State.hpp
     systems/render/dx12/Frame.cpp

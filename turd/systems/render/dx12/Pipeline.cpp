@@ -1,5 +1,6 @@
 #include "pch.hpp"
 #include "Pipeline.hpp"
+#include "ConstantBuffer.hpp"
 #include "core/ByteBuffer.hpp"
 #include "core/Environment.hpp"
 #include "core/IO.hpp"
@@ -233,6 +234,8 @@ namespace turd
 
     std::string Pipeline::Name() const { return mName; }
 
+    ConstantBuffer *Pipeline::Buffer(const std::string &name) { return nullptr; }
+
     void Pipeline::Compile(const std::string &spec)
     {
         auto buf = IO::File(spec);
@@ -274,6 +277,13 @@ namespace turd
                        compiledShaders[ShaderStage::Vertex]->GetBufferSize(), IID_ID3D12ShaderReflection, &vsReflector);
         D3D12_SHADER_DESC vsDesc;
         hr = vsReflector->GetDesc(&vsDesc);
+
+        for (UINT i = 0; i < vsDesc.ConstantBuffers; i++)
+        {
+            auto bufferReflect = vsReflector->GetConstantBufferByIndex(i);
+            auto ptr = std::make_unique<ConstantBuffer>(bufferReflect);
+            mBuffers[ptr->Name()] = std::move(ptr);
+        }
 
         ComPtr<ID3D12ShaderReflection> psReflector;
         hr = D3DReflect(compiledShaders[ShaderStage::Pixel]->GetBufferPointer(),
