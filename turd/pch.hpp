@@ -46,6 +46,7 @@
 
 #include "sqlite3.h"
 #include "core/Log.hpp"
+#include "core/Collections.hpp"
 
 namespace turd
 {

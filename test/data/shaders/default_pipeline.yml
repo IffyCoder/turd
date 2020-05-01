@@ -1,0 +1,9 @@
+pipeline:
+    name: "default"
+    shaders:
+        vertex:
+            defines:
+                BAZ: "quux"
+            file: ""
+        pixel:
+            file: ""

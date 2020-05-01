@@ -12,6 +12,7 @@ namespace turd
         ~DX12State();
 
         const uint32_t NumFrames() const { return 3; }
+        const uint32_t MaxTextures() const { return 32; }
 
         void FlushCommandQueue();
 

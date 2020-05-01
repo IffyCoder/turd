@@ -47,4 +47,6 @@ namespace turd
 
         mDX->NextFrame();
     }
+
+    DX12State *RenderSystem::DX() { return mDX.get(); }
 } // namespace turd

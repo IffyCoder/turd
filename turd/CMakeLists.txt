@@ -25,6 +25,7 @@ set(_SRC
     core/Application.hpp
     core/ByteBuffer.cpp
     core/ByteBuffer.hpp
+    core/Collections.hpp
     core/Environment.cpp
     core/Environment.hpp
     core/EventBus.cpp

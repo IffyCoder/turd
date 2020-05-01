@@ -18,6 +18,8 @@ namespace turd
 
         void Update(const float dt) override;
 
+        DX12State *DX();
+
       private:
         Window *mWindow;
         std::unique_ptr<DX12State> mDX;
