@@ -17,10 +17,16 @@ namespace turd
         for (auto i = 0; i < bufferDesc.Variables; i++)
         {
             D3D12_SHADER_VARIABLE_DESC varDesc;
-            auto varReflect = reflect->GetVariableByIndex(i);
-            varReflect->GetDesc(&varDesc);
+            D3D12_SHADER_TYPE_DESC typeDesc;
 
-            mVariables[varDesc.Name] = varDesc;
+            auto varReflect = reflect->GetVariableByIndex(i);
+            auto typeReflect = varReflect->GetType();
+
+            varReflect->GetDesc(&varDesc);
+            typeReflect->GetDesc(&typeDesc);
+
+            mVariableNames.Add(varDesc.Name);
+            mVariables[varDesc.Name] = {varDesc, typeDesc};
         }
     }
 
@@ -32,15 +38,27 @@ namespace turd
     {
         if (mVariables.Contains(varName))
         {
-            auto var = mVariables[varName];
+            auto &var = mVariables[varName].VariableDesc;
             if (var.StartOffset + size <= mSize)
             {
                 ::memcpy(mPtr + var.StartOffset, ptr, size);
+                mModified = true;
             }
         }
     }
 
     uint32_t ConstantBuffer::Size() const { return mSize; }
-    
+
     uint8_t *ConstantBuffer::Ptr() const { return mPtr; }
+
+    Vector<ShaderVariable> ConstantBuffer::Variables()
+    {
+        Vector<ShaderVariable> vars = {};
+        auto it = mVariables.cbegin();
+        for (;it != mVariables.cend(); ++it)
+        {
+            vars.Add(it->second);
+        }
+        return vars;
+    }
 } // namespace turd

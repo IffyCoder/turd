@@ -4,9 +4,23 @@
 
 namespace turd
 {
+    class Pipeline;
+    struct ShaderVariable
+    {
+        D3D12_SHADER_VARIABLE_DESC VariableDesc;
+        D3D12_SHADER_TYPE_DESC TypeDesc;
+    };
     class ConstantBuffer
     {
+        friend class Pipeline;
+
       public:
+        struct Variable
+        {
+            std::string Name;
+            uint32_t Size;
+        };
+
         explicit ConstantBuffer(ID3D12ShaderReflectionConstantBuffer *reflect);
         ~ConstantBuffer();
 
@@ -18,11 +32,15 @@ namespace turd
 
         uint8_t *Ptr() const;
 
+        Vector<ShaderVariable> Variables();
+
       private:
         std::string mName;
         uint32_t mSize;
         uint8_t *mPtr;
 
-        Map<std::string, D3D12_SHADER_VARIABLE_DESC> mVariables;
+        Vector<std::string> mVariableNames;
+        Map<std::string, ShaderVariable> mVariables;
+        std::atomic<bool> mModified = false;
     };
 } // namespace turd

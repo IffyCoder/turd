@@ -234,7 +234,14 @@ namespace turd
 
     std::string Pipeline::Name() const { return mName; }
 
-    ConstantBuffer *Pipeline::Buffer(const std::string &name) { return nullptr; }
+    ConstantBuffer *Pipeline::Buffer(const std::string &name)
+    {
+        if (!mBuffers.Contains(name))
+        {
+            return nullptr;
+        }
+        return mBuffers[name].get();
+    }
 
     void Pipeline::Compile(const std::string &spec)
     {
@@ -282,12 +289,31 @@ namespace turd
         {
             auto bufferReflect = vsReflector->GetConstantBufferByIndex(i);
             auto ptr = std::make_unique<ConstantBuffer>(bufferReflect);
+            if (mBuffers.Contains(ptr->Name()))
+            {
+                E("Constant buffer %s already exists", ptr->Name().c_str());
+                continue;
+            }
             mBuffers[ptr->Name()] = std::move(ptr);
         }
 
         ComPtr<ID3D12ShaderReflection> psReflector;
         hr = D3DReflect(compiledShaders[ShaderStage::Pixel]->GetBufferPointer(),
                         compiledShaders[ShaderStage::Pixel]->GetBufferSize(), IID_ID3D12ShaderReflection, &psReflector);
+        D3D12_SHADER_DESC psDesc;
+        hr = psReflector->GetDesc(&psDesc);
+
+        for (UINT i = 0; i < psDesc.ConstantBuffers; i++)
+        {
+            auto bufferReflect = psReflector->GetConstantBufferByIndex(i);
+            auto ptr = std::make_unique<ConstantBuffer>(bufferReflect);
+            if (mBuffers.Contains(ptr->Name()))
+            {
+                E("Constant buffer %s already exists", ptr->Name().c_str());
+                continue;
+            }
+            mBuffers[ptr->Name()] = std::move(ptr);
+        }
 
         if (FAILED(CreatePSO(compiledShaders, mInputLayout, mRootSignature.Get(), mState)))
         {
