@@ -48,6 +48,10 @@ set(_SRC
 
     managers/EntityManager.cpp
     managers/EntityManager.hpp
+    managers/MaterialManager.cpp
+    managers/MaterialManager.hpp
+    managers/PipelineManager.cpp
+    managers/PipelineManager.hpp
 
     systems/ISystem.hpp
     systems/input/InputSystem.cpp
