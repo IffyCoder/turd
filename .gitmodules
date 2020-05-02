@@ -16,3 +16,6 @@
 [submodule "ext/DirectXTex"]
 	path = ext/DirectXTex
 	url = git@github.com:microsoft/DirectXTex.git
+[submodule "ext/glTF-SDK"]
+	path = ext/glTF-SDK
+	url = git@github.com:microsoft/glTF-SDK.git
