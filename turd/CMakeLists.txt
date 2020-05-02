@@ -8,7 +8,7 @@ include_directories(
 
     ${CMAKE_SOURCE_DIR}/ext/imgui
     ${CMAKE_SOURCE_DIR}/ext/imgui/examples
-    #${CMAKE_SOURCE_DIR}/ext/assimp/include
+    ${CMAKE_SOURCE_DIR}/ext/glTF-SDK/Inc
     ${CMAKE_SOURCE_DIR}/ext/yaml-cpp/include
     ${CMAKE_SOURCE_DIR}/ext/bullet3/src
     ${CMAKE_CURRENT_BINARY_DIR}/../ext/sol2/single/include
@@ -78,4 +78,4 @@ set(_TP_SRC
 add_msvc_precompiled_header("pch.hpp" "pch.cpp" _SRC)
 add_executable(game WIN32 ${_SRC} ${_TP_SRC})
 
-target_link_libraries(game ${LUA_LIBRARIES} d3d12 dxguid dxgi Bullet3Common Bullet3Collision LinearMath yaml-cpp)
+target_link_libraries(game ${LUA_LIBRARIES} d3d12 dxguid dxgi Bullet3Common Bullet3Collision LinearMath yaml-cpp GLTFSDK)
