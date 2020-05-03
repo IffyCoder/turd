@@ -31,10 +31,10 @@ namespace turd
 
         std::string mName;
 
-        Vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
+        std::vector<D3D12_INPUT_ELEMENT_DESC> mInputLayout;
         ComPtr<ID3D12RootSignature> mRootSignature = nullptr;
         ComPtr<ID3D12PipelineState> mState = nullptr;
 
-        Map<std::string, std::unique_ptr<ConstantBuffer>> mBuffers;
+        std::map<std::string, std::unique_ptr<ConstantBuffer>> mBuffers;
     };
 } // namespace turd

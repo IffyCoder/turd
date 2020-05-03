@@ -25,7 +25,7 @@ namespace turd
             varReflect->GetDesc(&varDesc);
             typeReflect->GetDesc(&typeDesc);
 
-            mVariableNames.Add(varDesc.Name);
+            mVariableNames.push_back(varDesc.Name);
             mVariables[varDesc.Name] = {varDesc, typeDesc};
         }
     }
@@ -36,7 +36,7 @@ namespace turd
 
     void ConstantBuffer::Set(const std::string &varName, void *ptr, size_t size)
     {
-        if (mVariables.Contains(varName))
+        if (CONTAINS(mVariables, varName))
         {
             auto &var = mVariables[varName].VariableDesc;
             if (var.StartOffset + size <= mSize)
@@ -51,13 +51,13 @@ namespace turd
 
     uint8_t *ConstantBuffer::Ptr() const { return mPtr; }
 
-    Vector<ShaderVariable> ConstantBuffer::Variables()
+    std::vector<ShaderVariable> ConstantBuffer::Variables()
     {
-        Vector<ShaderVariable> vars = {};
+        std::vector<ShaderVariable> vars = {};
         auto it = mVariables.cbegin();
         for (;it != mVariables.cend(); ++it)
         {
-            vars.Add(it->second);
+            vars.push_back(it->second);
         }
         return vars;
     }

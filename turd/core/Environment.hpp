@@ -2,6 +2,7 @@
 
 #include "Settings.hpp"
 #include "managers/EntityManager.hpp"
+#include "managers/PipelineManager.hpp"
 #include "systems/input/InputSystem.hpp"
 #include "systems/render/RenderSystem.hpp"
 #include "EventBus.hpp"
@@ -13,6 +14,7 @@ namespace turd
         RenderSystem *gRenderSystem;
         InputSystem *gInputSystem;
         EntityManager *gEntityManager;
+        PipelineManager *gPipelineManager;
         EventBus *gEventBus;
     };
 

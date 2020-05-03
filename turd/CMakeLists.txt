@@ -25,7 +25,6 @@ set(_SRC
     core/Application.hpp
     core/ByteBuffer.cpp
     core/ByteBuffer.hpp
-    core/Collections.hpp
     core/Environment.cpp
     core/Environment.hpp
     core/EventBus.cpp
@@ -40,6 +39,8 @@ set(_SRC
     core/Settings.hpp
     core/Timer.cpp
     core/Timer.hpp
+    core/Utils.cpp
+    core/Utils.hpp
     core/Window.cpp
     core/Window.hpp
 

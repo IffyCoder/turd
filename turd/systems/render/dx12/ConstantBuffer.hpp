@@ -32,15 +32,15 @@ namespace turd
 
         uint8_t *Ptr() const;
 
-        Vector<ShaderVariable> Variables();
+        std::vector<ShaderVariable> Variables();
 
       private:
         std::string mName;
         uint32_t mSize;
         uint8_t *mPtr;
 
-        Vector<std::string> mVariableNames;
-        Map<std::string, ShaderVariable> mVariables;
+        std::vector<std::string> mVariableNames;
+        std::map<std::string, ShaderVariable> mVariables;
         std::atomic<bool> mModified = false;
     };
 } // namespace turd

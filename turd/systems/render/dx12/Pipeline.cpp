@@ -60,7 +60,7 @@ namespace turd
     };
 
     static PipelineInclude gShaderInclude;
-    using Defines = Vector<D3D_SHADER_MACRO>;
+    using Defines = std::vector<D3D_SHADER_MACRO>;
     enum class ShaderStage
     {
         Vertex,
@@ -162,21 +162,22 @@ namespace turd
 
             for (auto it = node.begin(); it != node.end(); ++it)
             {
-                defines.Add({it->first.as<std::string>().c_str(), it->second.as<std::string>().c_str()});
+                defines.push_back({it->first.as<std::string>().c_str(), it->second.as<std::string>().c_str()});
             }
         }
 
-        defines.Add({nullptr, nullptr});
+        defines.push_back({nullptr, nullptr});
     }
 
-    HRESULT CreatePSO(Map<ShaderStage, ComPtr<ID3DBlob>> compiledShaders, Vector<D3D12_INPUT_ELEMENT_DESC> &inputLayout,
-                      ID3D12RootSignature *rootSignature, ComPtr<ID3D12PipelineState> &pso)
+    HRESULT CreatePSO(std::map<ShaderStage, ComPtr<ID3DBlob>> compiledShaders,
+                      std::vector<D3D12_INPUT_ELEMENT_DESC> &inputLayout, ID3D12RootSignature *rootSignature,
+                      ComPtr<ID3D12PipelineState> &pso)
     {
         auto &env = GetEnvironment();
         auto dx = env.gRenderSystem->DX();
         auto device = dx->GetD3DDevice();
 
-        if (!(compiledShaders.Contains(ShaderStage::Vertex) || compiledShaders.Contains(ShaderStage::Pixel)))
+        if (!(CONTAINS(compiledShaders, ShaderStage::Vertex) || CONTAINS(compiledShaders, ShaderStage::Pixel)))
         {
             return E_INVALIDARG;
         }
@@ -188,17 +189,17 @@ namespace turd
         psoDesc.VS = CD3DX12_SHADER_BYTECODE(compiledShaders[ShaderStage::Vertex].Get());
         psoDesc.PS = CD3DX12_SHADER_BYTECODE(compiledShaders[ShaderStage::Pixel].Get());
 
-        if (compiledShaders.Contains(ShaderStage::Geometry))
+        if (CONTAINS(compiledShaders, ShaderStage::Geometry))
         {
             psoDesc.GS = CD3DX12_SHADER_BYTECODE(compiledShaders[ShaderStage::Geometry].Get());
         }
 
-        if (compiledShaders.Contains(ShaderStage::Domain))
+        if (CONTAINS(compiledShaders, ShaderStage::Domain))
         {
             psoDesc.DS = CD3DX12_SHADER_BYTECODE(compiledShaders[ShaderStage::Domain].Get());
         }
 
-        if (compiledShaders.Contains(ShaderStage::Hull))
+        if (CONTAINS(compiledShaders, ShaderStage::Hull))
         {
             psoDesc.HS = CD3DX12_SHADER_BYTECODE(compiledShaders[ShaderStage::Hull].Get());
         }
@@ -236,7 +237,7 @@ namespace turd
 
     ConstantBuffer *Pipeline::Buffer(const std::string &name)
     {
-        if (!mBuffers.Contains(name))
+        if (!CONTAINS(mBuffers, name))
         {
             return nullptr;
         }
@@ -252,7 +253,7 @@ namespace turd
         mName = pipeline["name"].as<std::string>();
 
         auto shaders = pipeline["shaders"];
-        Map<ShaderStage, ComPtr<ID3DBlob>> compiledShaders;
+        std::map<ShaderStage, ComPtr<ID3DBlob>> compiledShaders;
 
         for (auto it = shaders.begin(); it != shaders.end(); ++it)
         {
@@ -289,7 +290,7 @@ namespace turd
         {
             auto bufferReflect = vsReflector->GetConstantBufferByIndex(i);
             auto ptr = std::make_unique<ConstantBuffer>(bufferReflect);
-            if (mBuffers.Contains(ptr->Name()))
+            if (CONTAINS(mBuffers, ptr->Name()))
             {
                 E("Constant buffer %s already exists", ptr->Name().c_str());
                 continue;
@@ -307,7 +308,7 @@ namespace turd
         {
             auto bufferReflect = psReflector->GetConstantBufferByIndex(i);
             auto ptr = std::make_unique<ConstantBuffer>(bufferReflect);
-            if (mBuffers.Contains(ptr->Name()))
+            if (CONTAINS(mBuffers, ptr->Name()))
             {
                 E("Constant buffer %s already exists", ptr->Name().c_str());
                 continue;
@@ -368,7 +369,7 @@ namespace turd
         {
             if (pErrorBlob != nullptr)
             {
-                throw; // RuntimeError(ToString((char *)pErrorBlob->GetBufferPointer()));
+                throw; // RuntimeError(Tostd::string((char *)pErrorBlob->GetBufferPointer()));
             }
             else
             {
