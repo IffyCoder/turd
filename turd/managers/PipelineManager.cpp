@@ -1,6 +1,7 @@
 #include "pch.hpp"
 #include "PipelineManager.hpp"
 #include "systems/render/dx12/Pipeline.hpp"
+#include "systems/render/dx12/ConstantBuffer.hpp"
 #include "core/Platform.hpp"
 
 namespace turd
