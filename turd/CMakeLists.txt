@@ -11,6 +11,7 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/ext/glTF-SDK/Inc
     ${CMAKE_SOURCE_DIR}/ext/yaml-cpp/include
     ${CMAKE_SOURCE_DIR}/ext/bullet3/src
+    ${CMAKE_SOURCE_DIR}/ext/DirectXTex/DirectXTex
     ${CMAKE_CURRENT_BINARY_DIR}/../ext/sol2/single/include
 )
 
