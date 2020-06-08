@@ -33,8 +33,6 @@
 #include <type_traits>
 #include <sol/sol.hpp>
 
-#include <boost/signals2.hpp>
-
 #include <wrl.h>
 #include <dxgi1_6.h>
 #include "d3dx12.h"
