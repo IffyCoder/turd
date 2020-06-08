@@ -70,6 +70,10 @@ set(_SRC
     systems/render/dx12/Frame.hpp
     systems/render/dx12/Pipeline.cpp
     systems/render/dx12/Pipeline.hpp
+    systems/render/dx12/SRVHeap.cpp
+    systems/render/dx12/SRVHeap.hpp
+    systems/render/dx12/UploadBuffer.cpp
+    systems/render/dx12/UploadBuffer.hpp
 
     main.cpp
 )
