@@ -16,13 +16,22 @@ namespace turd
         for (auto &it : fs::directory_iterator(dir))
         {
             if (!it.is_regular_file())
+            {
                 continue;
+            }
 
             auto p = it.path();
             if (p.extension() == ".yml")
             {
-                auto pipeline = std::make_unique<Pipeline>(p.string());
-                mPipelines[pipeline->Name()] = std::move(pipeline);
+                try
+                {
+                    auto pipeline = std::make_unique<Pipeline>(p.string());
+                    mPipelines[pipeline->Name()] = std::move(pipeline);
+                }
+                catch (const RuntimeError &err)
+                {
+                    E(err.what());
+                }
             }
         }
     }

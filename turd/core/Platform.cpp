@@ -40,20 +40,19 @@ namespace turd
         char buffer[MAX_PATH];
         if (!GetCurrentDirectory(nBufferLength, buffer))
         {
-            throw;
+            throw RuntimeError("Failed to find current working directory");
         }
         return fs::path(buffer);
     }
 
     fs::path DataDirectory()
     {
-        std::vector<fs::path> paths = {ExeDir() / "data", WorkingDirectory() / "data"};
-
-        auto p = std::find_if(paths.begin(), paths.end(), [](auto &p) { return fs::exists(p); });
+        static std::vector<fs::path> paths = {ExeDir() / "data", WorkingDirectory() / "data"};
+        static auto p = std::find_if(paths.begin(), paths.end(), [](auto &p) { return fs::exists(p); });
 
         if (p == paths.end())
         {
-            throw;
+            throw RuntimeError("Failed to find a data directory");
         }
 
         return *p;

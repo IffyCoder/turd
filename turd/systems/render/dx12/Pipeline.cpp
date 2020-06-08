@@ -157,7 +157,7 @@ namespace turd
             if (!node.IsMap())
             {
                 E("Expected map type");
-                throw;
+                throw RuntimeError("Expected a map");
             }
 
             for (auto it = node.begin(); it != node.end(); ++it)
@@ -271,7 +271,7 @@ namespace turd
             auto hr = CompileShader(shaderFile, profile, defines, blob);
             if (FAILED(hr))
             {
-                throw;
+                throw RuntimeError("Failed to compile shader");
             }
 
             compiledShaders[stage] = blob;
@@ -318,7 +318,7 @@ namespace turd
 
         if (FAILED(CreatePSO(compiledShaders, mInputLayout, mRootSignature.Get(), mState)))
         {
-            throw;
+            throw RuntimeError("Failed to create pipeline state object");
         }
     }
 
@@ -369,11 +369,11 @@ namespace turd
         {
             if (pErrorBlob != nullptr)
             {
-                throw; // RuntimeError(Tostd::string((char *)pErrorBlob->GetBufferPointer()));
+                throw RuntimeError(std::string((char *)pErrorBlob->GetBufferPointer()));
             }
             else
             {
-                throw; // RuntimeError(_T("Failed to serialize root signature"));
+                throw RuntimeError("Failed to serialize root signature");
             }
         }
 
@@ -381,7 +381,7 @@ namespace turd
                                               pSerializedRootSig->GetBufferSize(), IID_PPV_ARGS(&mRootSignature));
         if (FAILED(hr))
         {
-            throw; // RuntimeError(_T("Failed to create root signature"));
+            throw RuntimeError("Failed to create root signature");
         }
     }
 
